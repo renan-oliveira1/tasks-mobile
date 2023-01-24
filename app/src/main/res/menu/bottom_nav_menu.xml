@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Tasks"
+        android:icon="@drawable/ic_baseline_task"
+        android:id="@+id/tasks"/>
+    <item android:title="Board"
+        android:icon="@drawable/ic_baseline_dashboard"
+        android:id="@+id/boards"/>
+</menu>

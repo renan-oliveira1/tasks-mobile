@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimension_default_half">6dp</dimen>
+    <dimen name="dimension_default">16dp</dimen>
+    <dimen name="dimension_default_double">32dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
