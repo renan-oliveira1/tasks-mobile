@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    android:id="@+id/fl"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.TasksFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.ui.home.task.TasksFragment">
 
-
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TAsks Fragment" />
+        android:layout_height="match_parent">
 
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/ifv_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dimension_default_half"
+            android:layout_marginTop="@dimen/dimension_default_half"
+            />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dimension_default_half"
+            android:entries="@array/spinner_task_status"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_boards"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ifv_filter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/dimension_default_double"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/task_item"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

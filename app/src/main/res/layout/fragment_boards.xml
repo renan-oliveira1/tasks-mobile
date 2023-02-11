@@ -6,12 +6,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.ui.home.board.BoardsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_boards"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/board_item"
-        />
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_boards"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/board_item"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
