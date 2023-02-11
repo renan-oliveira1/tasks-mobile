@@ -1,5 +1,6 @@
 package com.example.taskmobile.data.di
 
+import android.util.Log
 import com.example.taskmobile.core.AppConstans
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -20,7 +21,7 @@ class RetrofitClient private constructor(){
                 override fun intercept(chain: Interceptor.Chain): Response {
                     val request = chain.request()
                         .newBuilder()
-                        .addHeader(AppConstans.HEADER.TOKEN, token)
+                        .addHeader("Authorization", "Bearer $token")
                         .build()
                     return chain.proceed(request)
                 }
