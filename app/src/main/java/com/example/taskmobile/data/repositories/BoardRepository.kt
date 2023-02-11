@@ -7,7 +7,7 @@ import retrofit2.await
 
 class BoardRepository(private val service: BoardService): Repository<Board, String> {
     override suspend fun create(board: Board): Board {
-        return service.create(board.name).await()
+        return service.create(board).await()
     }
 
     override suspend fun findAll(): List<Board> {

@@ -7,4 +7,6 @@ data class Board(
     @SerializedName("name") var name: String,
     @SerializedName("tasks") var tasks: List<BoardTask>?,
     @SerializedName("users") var users: List<UserModel>?
-    )
+    ) {
+    constructor(name: String) : this(null, name, null, null)
+}

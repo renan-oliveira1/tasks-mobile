@@ -11,7 +11,7 @@ import retrofit2.http.Path
 interface BoardService {
 
     @POST("boards")
-    fun create(@Body name: String): Call<Board>
+    fun create(@Body board: Board): Call<Board>
 
     @GET("boards")
     fun findAll(): Call<List<Board>>
