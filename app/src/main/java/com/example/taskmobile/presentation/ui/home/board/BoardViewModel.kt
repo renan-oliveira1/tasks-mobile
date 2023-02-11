@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmobile.data.model.Board
+import com.example.taskmobile.domain.usecases.board.board.CreateBoardUseCase
 import com.example.taskmobile.domain.usecases.board.board.FindAllUserBoardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BoardViewModel @Inject constructor(
-    private val findAllUserBoardUseCase: FindAllUserBoardUseCase
+    private val findAllUserBoardUseCase: FindAllUserBoardUseCase,
+    private val createBoardUseCase: CreateBoardUseCase
     ): ViewModel(){
 
     private var _state = MutableLiveData<List<Board>>()
@@ -23,6 +25,15 @@ class BoardViewModel @Inject constructor(
             val boards = findAllUserBoardUseCase.execute()
             _state.postValue(boards)
         }
+    }
+
+    fun createBoard(name: String){
+        val board = Board(name = name)
+        viewModelScope.launch {
+            createBoardUseCase.execute(board)
+            loadBoards()
+        }
+
     }
 
 }
