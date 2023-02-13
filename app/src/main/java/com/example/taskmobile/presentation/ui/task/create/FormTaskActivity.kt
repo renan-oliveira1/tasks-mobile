@@ -11,7 +11,7 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.example.taskmobile.core.AppConstans
+import com.example.taskmobile.core.AppConstants
 import com.example.taskmobile.data.model.Task
 import com.example.taskmobile.databinding.ActivityFormTaskBinding
 import com.example.taskmobile.presentation.ui.home.HomeActivity
@@ -171,7 +171,7 @@ class FormTaskActivity : AppCompatActivity(), OnDateSetListener, OnTimeSetListen
     private fun loadDataFromActivity(){
         val bundle = intent.extras
         if(bundle != null){
-            editTask = bundle.getString(AppConstans.BUNDLE.IDTASK)!!
+            editTask = bundle.getString(AppConstants.BUNDLE.IDTASK)!!
             viewModel.findTask(editTask!!)
         }
     }

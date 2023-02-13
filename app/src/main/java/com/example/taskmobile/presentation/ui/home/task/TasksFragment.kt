@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.viewModels
-import com.example.taskmobile.core.AppConstans
+import com.example.taskmobile.core.AppConstants
 import com.example.taskmobile.data.model.Task
 import com.example.taskmobile.data.model.UpdateTaskStatusModel
 import com.example.taskmobile.databinding.FragmentTasksBinding
@@ -25,6 +27,7 @@ class TasksFragment : Fragment() {
     private val viewModel by viewModels<TasksViewModel>()
     private val adapter by lazy { TasksAdapter() }
     private lateinit var itemListener: TaskActionListener
+    private var taskFilter: Int = AppConstants.TASK_FILTER.DONE
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,14 +38,31 @@ class TasksFragment : Fragment() {
         observeLoadTasks()
         dealWithActionsTaskListener()
 
+        spinnerListener()
+
+
         return root
     }
 
     override fun onResume() {
         super.onResume()
         adapter.attachListener(itemListener)
-        viewModel.loadTasks()
+        viewModel.loadTasks(taskFilter)
         binding.rvBoards.adapter = adapter
+    }
+
+    private fun spinnerListener(){
+        binding.spinner.onItemSelectedListener = object: OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                taskFilter = position
+                viewModel.loadTasks(taskFilter)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
     }
 
     private fun observeLoadTasks(){
@@ -55,29 +75,29 @@ class TasksFragment : Fragment() {
         itemListener = object : TaskActionListener{
             override fun onCompleteClick(id: String) {
                 val updateTaskStatusModel = UpdateTaskStatusModel(id, true)
-                viewModel.updateStatusTask(updateTaskStatusModel)
+                viewModel.updateStatusTask(updateTaskStatusModel, taskFilter)
             }
 
             override fun onEditClick(id: String) {
                 val intent = Intent(context, FormTaskActivity::class.java)
                 val bundle = Bundle()
-                bundle.putString(AppConstans.BUNDLE.IDTASK, id)
+                bundle.putString(AppConstants.BUNDLE.IDTASK, id)
                 intent.putExtras(bundle)
                 startActivity(intent)
             }
 
             override fun onDeleteClick(id: String) {
-                viewModel.deleteTask(id)
+                viewModel.deleteTask(id, taskFilter)
                 val snackbar = Snackbar.make(binding.root, "Task deleted!!", Snackbar.LENGTH_LONG)
                 snackbar.setAction("UNDO", View.OnClickListener {
-                    viewModel.undoDelete()
+                    viewModel.undoDelete(taskFilter)
                 })
                 snackbar.show()
             }
 
             override fun onTaskClick(task: Task) {
                 val bundle = Bundle()
-                bundle.putSerializable(AppConstans.BUNDLE.TASK, task)
+                bundle.putSerializable(AppConstants.BUNDLE.TASK, task)
 
                 val dialog = InfoTaskDialogFragment()
                 dialog.arguments = bundle

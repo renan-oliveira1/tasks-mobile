@@ -1,6 +1,8 @@
 package com.example.taskmobile.presentation.ui.home.task.adapter
 
+import android.opengl.Visibility
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -39,22 +41,30 @@ class TasksAdapter: ListAdapter<Task, TasksAdapter.ViewHolder>(DiffCallback())  
     ): RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: Task){
-            binding.tvName.text = item.name
-            binding.tvDateInfo.text = item.date
+            binding.apply {
+                tvName.text = item.name
+                tvDateInfo.text = item.date
 
-            binding.ifbRemove.setOnClickListener {
-                item.id?.let { it1 -> listener.onDeleteClick(it1) }
+                if(item.complete == true){
+                    ifbComplete.visibility = View.INVISIBLE
+                    ifbEdit.visibility = View.INVISIBLE
+                }
+
+                ifbRemove.setOnClickListener {
+                    item.id?.let { it1 -> listener.onDeleteClick(it1) }
+                }
+
+                clLayoutCard.setOnClickListener{
+                    listener.onTaskClick(item)
+                }
+
+                ifbComplete.setOnClickListener { item.id?.let { it1 -> listener.onCompleteClick(it1) } }
+
+                ifbEdit.setOnClickListener {
+                    item.id?.let { it1 -> listener.onEditClick(it1) }
+                }
+
             }
-
-            binding.ifbEdit.setOnClickListener {
-                item.id?.let { it1 -> listener.onEditClick(it1) }
-            }
-
-            binding.clLayoutCard.setOnClickListener{
-                listener.onTaskClick(item)
-            }
-
-            binding.ifbComplete.setOnClickListener { item.id?.let { it1 -> listener.onCompleteClick(it1) } }
 
         }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.taskmobile.core.AppConstants
 import com.example.taskmobile.data.model.Task
 import com.example.taskmobile.data.model.UpdateTaskStatusModel
 import com.example.taskmobile.domain.usecases.task.*
@@ -21,31 +22,32 @@ class TasksViewModel @Inject constructor(
 
     private lateinit var deletedTask: Task
 
-    fun loadTasks(){
+    fun loadTasks(taskFilter: Int){
         viewModelScope.launch {
-            _state.postValue(tasksUseCases.findAllUndoTaskUseCase.execute())
+            if(taskFilter == AppConstants.TASK_FILTER.UNDO) _state.postValue(tasksUseCases.findAllUndoTaskUseCase.execute())
+            if(taskFilter == AppConstants.TASK_FILTER.DONE) _state.postValue(tasksUseCases.findAllDoneTaskUseCase.execute())
         }
     }
 
-    fun deleteTask(id: String){
+    fun deleteTask(id: String, taskFilter: Int){
         viewModelScope.launch {
             deletedTask = tasksUseCases.deleteTaskUseCase.execute(id)
-            loadTasks()
+            loadTasks(taskFilter)
         }
     }
 
-    fun undoDelete(){
+    fun undoDelete(taskFilter: Int){
         viewModelScope.launch {
             tasksUseCases.createTaskUseCase.execute(deletedTask)
-            loadTasks()
+            loadTasks(taskFilter)
         }
     }
 
-    fun updateStatusTask(updateStatusTask: UpdateTaskStatusModel){
+    fun updateStatusTask(updateStatusTask: UpdateTaskStatusModel, taskFilter: Int){
 
         viewModelScope.launch {
             tasksUseCases.updateStatusTaskUseCase.execute(updateStatusTask)
-            loadTasks()
+            loadTasks(taskFilter)
         }
     }
 

@@ -1,6 +1,6 @@
 package com.example.taskmobile.core
 
-class AppConstans private constructor(){
+class AppConstants private constructor(){
     object HEADER{
         const val TOKEN = "authorization"
     }
@@ -8,6 +8,11 @@ class AppConstans private constructor(){
     object BUNDLE{
         const val IDTASK = "idtask"
         const val TASK = "task"
+    }
+
+    object TASK_FILTER{
+        const val DONE = 1
+        const val UNDO = 0
     }
 
 }

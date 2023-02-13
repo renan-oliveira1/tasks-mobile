@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import com.example.taskmobile.core.AppConstans
+import com.example.taskmobile.core.AppConstants
 import com.example.taskmobile.data.model.Task
 import com.example.taskmobile.databinding.DialogTaskInfoBinding
 
@@ -35,7 +35,7 @@ class InfoTaskDialogFragment: DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val task: Task = arguments?.getSerializable(AppConstans.BUNDLE.TASK) as Task
+        val task: Task = arguments?.getSerializable(AppConstants.BUNDLE.TASK) as Task
         binding.tvName.text = task.name
         binding.tvDate.text = task.date
         binding.tvDescription.text = task.description

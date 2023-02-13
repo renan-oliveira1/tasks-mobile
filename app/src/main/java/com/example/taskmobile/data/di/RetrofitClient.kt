@@ -1,7 +1,5 @@
 package com.example.taskmobile.data.di
 
-import android.util.Log
-import com.example.taskmobile.core.AppConstans
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
