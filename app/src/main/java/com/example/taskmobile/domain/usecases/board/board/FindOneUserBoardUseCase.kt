@@ -1,17 +1,14 @@
 package com.example.taskmobile.domain.usecases.board.board
 
-import com.example.taskmobile.data.di.RetrofitClient
 import com.example.taskmobile.data.model.Board
 import com.example.taskmobile.data.repositories.BoardRepository
-import com.example.taskmobile.data.services.BoardService
 
-class FindAllUserBoardUseCase(private val repository: BoardRepository) {
+class FindOneUserBoardUseCase(private val repository: BoardRepository) {
 
-
-    suspend fun execute(): List<Board>{
+    suspend fun execute(id: String): Board{
 
         return try{
-            repository.findAll()
+            repository.findOne(id)
         }catch (e: Exception){
             throw Exception(e)
         }
