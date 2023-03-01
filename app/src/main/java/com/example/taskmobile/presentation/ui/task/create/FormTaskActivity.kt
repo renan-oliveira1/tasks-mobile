@@ -11,11 +11,15 @@ import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.taskmobile.core.AppConstants
+import com.example.taskmobile.core.UiEvent
 import com.example.taskmobile.data.model.Task
 import com.example.taskmobile.databinding.ActivityFormTaskBinding
 import com.example.taskmobile.presentation.ui.home.HomeActivity
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,7 +38,7 @@ class FormTaskActivity : AppCompatActivity(), OnDateSetListener, OnTimeSetListen
 
         btnListeners()
 
-        observeEditTask()
+        observerViewModel()
 
         loadDataFromActivity()
 
@@ -71,7 +75,6 @@ class FormTaskActivity : AppCompatActivity(), OnDateSetListener, OnTimeSetListen
         }
 
     }
-
 
     private fun backToHomeActivity(){
         val intent = Intent(this, HomeActivity::class.java)
@@ -176,7 +179,7 @@ class FormTaskActivity : AppCompatActivity(), OnDateSetListener, OnTimeSetListen
         }
     }
 
-    private fun observeEditTask(){
+    private fun observerViewModel(){
         viewModel.editTask.observe(this){
             if(it !== null){
                 binding.tilName.editText?.setText(it.name)
@@ -184,6 +187,23 @@ class FormTaskActivity : AppCompatActivity(), OnDateSetListener, OnTimeSetListen
                 val infoDate = it.date.split(" ")
                 binding.tilDate.editText?.setText(infoDate[0])
                 binding.tilTime.editText?.setText(infoDate[1])
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.eventFlow.collectLatest { result ->
+                when(result){
+                    is UiEvent.ShowToast ->
+                        Toast.makeText(applicationContext, result.text, Toast.LENGTH_LONG).show()
+
+                    is UiEvent.ShowSnackbar -> {
+                        val snackbar = Snackbar.make(binding.root, result.text, Snackbar.LENGTH_LONG)
+                        snackbar.show()
+
+                        val intent = Intent(applicationContext, HomeActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
             }
         }
     }
