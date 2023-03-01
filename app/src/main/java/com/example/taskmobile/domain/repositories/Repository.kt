@@ -1,4 +1,4 @@
-package com.example.taskmobile.data.repositories
+package com.example.taskmobile.domain.repositories
 
 interface Repository<T, K> {
 
