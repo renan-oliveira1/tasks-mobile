@@ -1,8 +1,9 @@
 package com.example.taskmobile.data.repositories
 
+import com.example.taskmobile.data.model.AddUserBoardModel
 import com.example.taskmobile.data.model.Board
 import com.example.taskmobile.data.services.BoardService
-import retrofit2.Call
+import com.example.taskmobile.domain.repositories.Repository
 import retrofit2.await
 
 class BoardRepository(private val service: BoardService): Repository<Board, String> {
@@ -24,5 +25,13 @@ class BoardRepository(private val service: BoardService): Repository<Board, Stri
 
     override suspend fun delete(id: String): Board {
         TODO("Not yet implemented")
+    }
+
+    suspend fun addUserToBoard(addUserBoardModel: AddUserBoardModel): Board{
+        return service.addUser(addUserBoardModel).await()
+    }
+
+    suspend fun deleteUserToBoard(addUserBoardModel: AddUserBoardModel): Board{
+        return service.removeUser(addUserBoardModel).await()
     }
 }
