@@ -49,6 +49,10 @@ class TasksAdapter: ListAdapter<Task, TasksAdapter.ViewHolder>(DiffCallback())  
                     ifbComplete.visibility = View.INVISIBLE
                     ifbEdit.visibility = View.INVISIBLE
                 }
+                if(item.complete == false){
+                    ifbComplete.visibility = View.VISIBLE
+                    ifbEdit.visibility = View.VISIBLE
+                }
 
                 ifbRemove.setOnClickListener {
                     item.id?.let { it1 -> listener.onDeleteClick(it1) }

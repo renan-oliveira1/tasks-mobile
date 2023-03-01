@@ -5,10 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskmobile.core.AppConstants
+import com.example.taskmobile.core.Resource
+import com.example.taskmobile.core.UiEvent
 import com.example.taskmobile.data.model.Task
 import com.example.taskmobile.data.model.UpdateTaskStatusModel
 import com.example.taskmobile.domain.usecases.task.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +23,9 @@ class TasksViewModel @Inject constructor(
 
     private var _state = MutableLiveData<List<Task>>()
     var state: LiveData<List<Task>> = _state
+
+    private val _eventFlow = MutableSharedFlow<UiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     private lateinit var deletedTask: Task
 
@@ -31,8 +38,17 @@ class TasksViewModel @Inject constructor(
 
     fun deleteTask(id: String, taskFilter: Int){
         viewModelScope.launch {
-            deletedTask = tasksUseCases.deleteTaskUseCase.execute(id)
-            loadTasks(taskFilter)
+            val result = tasksUseCases.deleteTaskUseCase.execute(id)
+
+            when(result){
+                is Resource.Success -> {
+                    _eventFlow.emit(UiEvent.ShowSnackbar("Successfully deleted!!"))
+                    loadTasks(taskFilter)
+                }
+                is Resource.Error -> {
+                    _eventFlow.emit(UiEvent.ShowToast(result.uiText.toString()))
+                }
+            }
         }
     }
 

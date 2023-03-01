@@ -61,7 +61,7 @@ class AddDialogFragment: DialogFragment() {
             val name = binding.tilName.editText?.text.toString()
             viewModel.createBoard(name)
             addDialogListener.applyReload()
-            dialog?.dismiss()
+            dismiss()
         }
 
         binding.btnCancel.setOnClickListener { dismiss() }

@@ -8,17 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.taskmobile.core.AppConstants
+import com.example.taskmobile.core.UiEvent
 import com.example.taskmobile.data.model.Task
 import com.example.taskmobile.data.model.UpdateTaskStatusModel
 import com.example.taskmobile.databinding.FragmentTasksBinding
+import com.example.taskmobile.presentation.ui.home.HomeActivity
 import com.example.taskmobile.presentation.ui.home.task.adapter.TaskActionListener
 import com.example.taskmobile.presentation.ui.home.task.adapter.TasksAdapter
 import com.example.taskmobile.presentation.ui.task.create.FormTaskActivity
 import com.example.taskmobile.presentation.ui.task.create.dialog.InfoTaskDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class TasksFragment : Fragment() {
@@ -68,6 +73,19 @@ class TasksFragment : Fragment() {
     private fun observeLoadTasks(){
         viewModel.state.observe(viewLifecycleOwner){
             adapter.submitList(it)
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.eventFlow.collectLatest { result ->
+                when(result){
+                    is UiEvent.ShowToast ->
+                        Toast.makeText(context, result.text, Toast.LENGTH_LONG).show()
+                    is UiEvent.ShowSnackbar -> {
+                        val snackbar = Snackbar.make(binding.root, result.text, Snackbar.LENGTH_LONG)
+                        snackbar.show()
+                    }
+                }
+            }
         }
     }
 

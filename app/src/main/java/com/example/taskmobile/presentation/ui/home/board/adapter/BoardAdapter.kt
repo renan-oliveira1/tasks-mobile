@@ -11,24 +11,39 @@ import com.example.taskmobile.databinding.BoardItemBinding
 
 class BoardAdapter: ListAdapter<Board, BoardAdapter.ViewHolder>(DiffCallback()) {
 
+    private lateinit var boardActionListener: BoardActionListener
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = BoardItemBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, boardActionListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
+    fun setListener(listener: BoardActionListener){
+        boardActionListener = listener
+    }
+
 
     inner class ViewHolder(
-        private val binding: BoardItemBinding
+        private val binding: BoardItemBinding,
+        private val listener: BoardActionListener
     ): RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: Board){
             binding.tvName.text = item.name
+
+            binding.clLayoutCard.setOnClickListener{
+                item.id?.let { it1 -> listener.onTaskClick(it1) }
+            }
+
+            binding.ifbSettings.setOnClickListener {
+                item.id?.let { it1 -> listener.onSettingClick(it1) }
+            }
         }
 
     }
