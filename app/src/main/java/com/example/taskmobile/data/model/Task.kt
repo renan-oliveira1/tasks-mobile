@@ -9,7 +9,7 @@ data class Task(
     @SerializedName("description") var description: String,
     @SerializedName("date") var date: String,
     @SerializedName("complete") var complete: Boolean?,
-    @SerializedName("user") var user: String?
+    @SerializedName("user_id") var user: String?
 ) : Serializable {
     constructor(name: String, description: String, date: String) : this(null, name, description, date, false, null)
     constructor(id: String, name: String, description: String, date: String) : this(id, name, description, date, false, null)
