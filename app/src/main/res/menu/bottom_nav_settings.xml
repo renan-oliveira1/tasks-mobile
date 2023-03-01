@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Managers"
+        android:icon="@drawable/ic_baseline_manage"
+        android:id="@+id/managers"/>
+    <item android:title="Users"
+        android:icon="@drawable/ic_baseline_supervised_user"
+        android:id="@+id/users"/>
+</menu>

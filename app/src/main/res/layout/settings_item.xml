@@ -22,16 +22,43 @@
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_email"
+            android:layout_marginHorizontal="@dimen/dimension_default"
+            android:gravity="start"
             android:textSize="20sp"
             android:textStyle="bold"
-            tools:text="Board Name"/>
+            tools:text="Renan"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="@dimen/dimension_default"
+            android:gravity="start"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="renan@gmail.com"/>
 
         <androidx.constraintlayout.utils.widget.ImageFilterButton
-            android:id="@+id/ifb_settings"
+            android:id="@+id/ifb_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_settings"
+            android:src="@drawable/ic_baseline_remove"
+            android:tint="@color/red"
+            android:background="#00000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:id="@+id/ifb_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_add"
+            android:tint="@color/green"
             android:background="#00000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

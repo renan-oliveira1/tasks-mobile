@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Unassiged"
+        android:icon="@drawable/ic_baseline_task"
+        android:id="@+id/unassiged"/>
+    <item android:title="Started"
+        android:icon="@drawable/ic_baseline_engineering"
+        android:id="@+id/started"/>
+    <item android:title="Compĺeted"
+        android:icon="@drawable/ic_baseline_done_all"
+        android:id="@+id/completed"/>
+</menu>
