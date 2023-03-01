@@ -18,4 +18,8 @@ class UserRepository(private val service: UserService) {
         return service.register(user).await()
     }
 
+    suspend fun get(): List<UserModel>{
+        return service.getUsers().await()
+    }
+
 }
