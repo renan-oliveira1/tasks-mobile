@@ -3,6 +3,7 @@ package com.example.taskmobile.data.repositories
 import com.example.taskmobile.data.model.Task
 import com.example.taskmobile.data.model.UpdateTaskStatusModel
 import com.example.taskmobile.data.services.TaskService
+import com.example.taskmobile.domain.repositories.Repository
 import retrofit2.await
 
 class TaskRepository(private val service: TaskService): Repository<Task, String> {
